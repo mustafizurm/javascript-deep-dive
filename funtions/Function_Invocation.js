@@ -16,7 +16,6 @@ function sayHello() {
 
 
 
-
 // The code below calls the function.
 // But it does not use the result.
 function sayHello() {
