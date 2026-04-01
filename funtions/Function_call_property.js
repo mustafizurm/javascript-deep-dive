@@ -76,3 +76,9 @@ class CartItem {
 var user1_cart = new CartItem('mobile', '20000', '2')
 
 console.log(product1.getDiscount.call(user1_cart, 700))
+
+
+
+// IMPORTENT NOTE
+
+// i have to pass only one argument as object into call,apply,bind property of function object. but i can pass a lot of arguments as data using ',' for call property |
