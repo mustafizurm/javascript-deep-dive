@@ -1,76 +1,159 @@
-// Object Constructor (built-in) দিয়ে object তৈরি করা,
-// way - 1
+// Object 
+// Object Evolution
 
-var tamim = new Object();
+// Step 1: Object Literal {} (1997) And New Object
+const rahim = { name: "Rahim" };
+const Momin = new Object()
+Momin.name = "Momin";
+Momin.age = "23"
 
-tamim.name = "tamim";
-tamim.age = 25;
+// Problem:
+// 1- not reusable
+// 2- not possible to create a lot of objects
+// 3- if i want to create like 100 objects i have to do copy past, otherwish it will not be possible.
+// 
 
-// method add
-tamim.greet = function () {
-    return "Hello, my name is " + this.name;
-};
+// Need: 
+// 1- reusable system
 
-tamim.getAge = function () {
-    return this.age;
-};
+// solutions:
+// 1- constructor function
 
-// use
-console.log(tamim.greet());
-console.log(tamim.getAge());
+// -----------------------------------------------------------------------------------------------
+// Step 2: Constructor Function (1997)
+function User(name) {
+    this.name = name;
+}
 
+const u1 = new User("Rahim");
 
+// solve:
+// 1- reusable object creation
 
-//  Object Literal দিয়ে object তৈরি করা (common-way)| when we need single object then we can use it
-// way - 2
+// New Problems:
+// 1- if i forget to use new keyword i have to face a big problem. that is dengerous.
+// 2- method duplication
+// 3- confusing syntax
 
-var taskin = {
-    name: "taskin", // property
-    age: 25,       // property
+// Need: memory efficient + clean system
 
-    // method
-    greet: function () {
-        return "Hello, my name is " + this.name;
+// solutions:
+// 1- use prototype
+
+// --------------------------------------------------------------------------------------------------
+// tep 3: Prototype System
+User.prototype = {
+    eat: function () {
+        return this.name + " " + "is eating"
     }
-};
+}
 
-//  Factory Function দিয়ে object তৈরি করা| when we need a lot of objects then we can use this way
-function createUser(name, age) {
+// solved:
+// 1- method shared → memory save
+// 2- inheritance possible
+
+// New Problems:
+// 1- not easy to understand
+// 2- constructor + prototype split (messy)
+// 3- as use use another object for method share that is prototype, here is not possible doing encaptulation 
+
+// need: 
+// 1- simple abstraction
+// 2- doing encaptulation
+
+// solutions:
+// 1- factory function
+
+// -------------------------------------------------------------------------------------------
+// Step 4: Factory Function
+function createUser(name) {
     return {
-        name: name,
-        age: age,
-        greet: function () {
-            return "Hello " + this.name;
-        }
+        name,
+        sayHi() { }
     };
 }
+// Solved:
+// 1- new problem gone
+// 2- simple + readable
+// 3- easy for encaptulation
+// 4- easy for abstraction
 
-var rakib = createUser("rakib", 25);
+// New Problems:
+// 1- method duplication again 
+// 2- inheritance weak
+// 3- not working instanceof 
+
+// Need: 
+// 1- flexible inheritance + structure
 
 
-// Constructor Function, it controll prototype. but its a old version
-// way- 4
+// solutions:
+// 1- Object.create
 
-function User(name, age) {
-    this.name = name;
-    this.age = age;
+// ----------------------------------------------------------------------------------------------
+// Step 5: Object.create() (ES5 - 2009)
+var personProto = {
+    sleep: function () {
 
+    }
+}
+
+const person = Object.create(personProto);
+person.name = "Tamim";
+person.age = 25;
+
+
+
+// Solved:
+// 1- direct prototype linking
+// 2- no need constructor function to inharitance
+// 3- doing nature expose of javascript 
+// 4- chain easily
+
+// New Problems:
+// 1- no have Reusable pattern
+// 2- creating Multiple object is inconvenient
+// 3- readability problem
+// 4- for creating Multiple object, we need extra wrapper function.
+// 5- Encapsulation (private data) problem
+
+// Need: 
+// 1- creating multiple object
+// 2- need readability
+// 3- easy inharitance
+// 4- doing encaptulation
+// 5- doing abstraction
+
+// solutions:
+// 1- using factory function + Object.create
+// ------------------------------------------------------------------------------------
+// Step 6: Object.create() and Factory function
+var playerMethods = {
 
 }
-User.prototype = {
-    greet() {
-        return "Hello " + this.name;
-    },
+
+function player(name, age) {
+    let obj = Object.create(playerMethods)
+    obj.name = name;
+    obj.age = age;
+    return obj;
 }
 
-var mustafizur = new User("mustafizur", 25);
+// solved:
+// 1- creating multiple object
+// 2- readability
+// 3- inharitance
 
+// didnt solve:
+// 1- encaptulation
+// 2- abstraction
 
+// // solutions:
+// using class for all problms to solve.
 
-// Class (ES6) it controll prototype. and its a new version
-// way - 5
-
-class User {
+// ---------------------------------------------------------------------------------------------
+// Step 7: class
+class Parent {
     constructor(name, age) {
         this.name = name;
         this.age = age;
@@ -81,18 +164,10 @@ class User {
     }
 }
 
-var nahid = new User("nahid", 25);
+var nahid = new Parent("nahid", 45);
 
-
-// Object.create. it works to controll prototype. it works for constructor,class
-//  way - 6
-
-var userMethods = {
-    greet: function () {
-        return "Hello " + this.name;
-    }
-};
-
-var masrafi = Object.create(userMethods);
-masrafi.name = "masrafi";
-masrafi.age = 25;
+// solved:
+// 1- encaptulation
+// 2- abstraction
+// 3- inharitance
+// 4- polymorphism
