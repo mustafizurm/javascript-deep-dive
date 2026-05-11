@@ -1,17 +1,18 @@
 // Sometimes we need to create many objects of the same type.
-// To create an object type we use an object constructor function.
+// To create many objects we use constructor function.
 
-// Constructor Function মানে হলো- একটা special function object যেটা ব্যবহার করা হয় new keyword দিয়ে নতুন object বানানোর জন্য|
-// constructor function ৪টা গুরুত্বপূর্ণ কাজ করে-
-// 1- craete a object. and object name is this.
-// 2- calling function by call property and pass arguments. first argument is this object and other arguments are data that is property of object.
-// 3- linking prototype object. so that this object can inharite from prototype object. 
-// 4- return this object. 
+// Constructor Function means a special type of function object, where is used new keyword to create object.
+
+// new keyword can do-
+// 1- create a object.
+// 2- doing bind with this keyword, now this keyword is object.
+// 3- function.prototype will be prototype of this object.
+// 4- and return new object.
 
 
-function Person(first, last, age, eye) {
-  this.firstName = first;
-  this.lastName = last;
+function Person(firstName, lastName, age, eye) {
+  this.firstName = firstName;
+  this.lastName = lastName;
   this.age = age;
   this.eyeColor = eye;
   this.getFullName = function(){
