@@ -10,23 +10,60 @@
 // Because of this link, the created object can access methods and properties
 // defined inside the prototype object. This is called prototype chaining.
 
-function Player(name, role, country){
-    this.name = name;
-    this.role = role;
-    this.country = country;
-}
 
-// adding method to prototype
-Player.prototype = {
-    getRole: function(){
-        return this.role + ' is ' + this.name + "'s role";
+function BANK() {
+    this.name = '';
+    this.nid = '';
+    this.name = '';
+    this.balance = 0;
+}
+BANK.prototype = {
+    createAccount: function (nid, dob, name) {
+        this.nid = nid;
+        this.dob = dob;
+        this.name = name;
+    },
+    deposit: function (balance) {
+        const depositBalance = balance;
+        if (Number(depositBalance) && Number(depositBalance) > 0) {
+            this.balance = this.balance + depositBalance;
+            return `successfully deposit ${depositBalance} TK`
+        } else {
+            return `Not a valid number`
+        }
+    },
+    withdrew: function (balance) {
+        const amount = Number(balance);
+
+        if (!amount || amount <= 0) {
+            return "Not a valid number";
+        }
+
+        if (amount > this.balance) {
+            return "Insufficient Balance";
+        }
+
+        this.balance = this.balance - amount;
+        return `Successfully Withdrawn ${amount} TK`;
+    },
+    checkBalance: function (nid) {
+        if (Number(nid) === Number(this.nid)) {
+            return `Your Balance is ${this.balance} TK`
+        } else {
+            return `Nid Incorrect`
+        }
     }
 }
 
-var mushfiquer = new Player('mushfiquer', 'batting', 'bd');
-var taskin = new Player('taskin', 'bowling', 'bd');
-console.log(taskin.getRole())
-console.log(mushfiquer.getRole())
+const user1 = new BANK()
+user1.createAccount('7308475704', '20-01-1996', 'user1');
+user1.deposit(500);
+user1.deposit(1500);
+user1.withdrew(300);
+const user1_Check_Balance = user1.checkBalance('7308475704');
+console.log(user1_Check_Balance)
+
+
 
 
 // Here, Player.prototype is a property of the Player function,
